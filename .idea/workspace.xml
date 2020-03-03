@@ -27,6 +27,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager">
@@ -79,22 +80,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1582887660762" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1582887786759">
+    <state width="336" height="600" key="GridCell.Tab.0.bottom" timestamp="1583229278699">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1582887786759" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1582887786759">
+    <state width="336" height="600" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1583229278699" />
+    <state width="336" height="600" key="GridCell.Tab.0.center" timestamp="1583229278698">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1582887786759" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1582887786759">
+    <state width="336" height="600" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1583229278698" />
+    <state width="336" height="600" key="GridCell.Tab.0.left" timestamp="1583229278696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1582887786759" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1582887786759">
+    <state width="336" height="600" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1583229278696" />
+    <state width="336" height="600" key="GridCell.Tab.0.right" timestamp="1583229278699">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1582887786759" />
+    <state width="336" height="600" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1583229278699" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1582887403091">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -107,5 +108,9 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="492" y="280" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1582887795395" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1583229253665">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1583229253665" />
   </component>
 </project>
