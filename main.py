@@ -27,4 +27,4 @@ def board(size, blocks, mode):
     print("+")
 
 print(menu())
-board(4, 0, 5)
+board(4, 0, 4)
