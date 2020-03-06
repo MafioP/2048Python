@@ -1,23 +1,11 @@
-class Tile():
+class Tile:
     def __init__(self):
-        self.value
-        self.xCoord
-        self.yCoord
+        self.__value = 0
+        return None
 
     def getValue(self):
-        return self.value
+        return self.__value
 
     def setValue(self, value):
-        self.value = value
-
-    def getXCoord(self):
-        return self.xCoord
-
-    def setXCoord(self, xCoord):
-        self.xCoord = xCoord
-
-    def getYCoord(self):
-        return self.yCoord
-
-    def setYCoord(self, yCoord):
-        self.yCoord = yCoord
+        self.__value = value
+        return None
