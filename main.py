@@ -39,3 +39,4 @@ def board(size, blocks, mode):
 
 
 menu()
+

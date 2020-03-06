@@ -83,6 +83,25 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1582887660762" />
+<<<<<<< HEAD
+    <state width="336" height="600" key="GridCell.Tab.0.bottom" timestamp="1583232824274">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="336" height="600" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1583232824274" />
+    <state width="336" height="600" key="GridCell.Tab.0.center" timestamp="1583232824272">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="336" height="600" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1583232824272" />
+    <state width="336" height="600" key="GridCell.Tab.0.left" timestamp="1583232824272">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="336" height="600" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1583232824272" />
+    <state width="336" height="600" key="GridCell.Tab.0.right" timestamp="1583232824272">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="336" height="600" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1583232824272" />
+    <state x="184" y="6" key="SettingsEditor" timestamp="1583229556851">
+=======
     <state x="257" y="26" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040/-1280.64.1280.1024@0.0.2560.1040" timestamp="1583264013451" />
     <state x="583" y="126" key="FileChooserDialogImpl" timestamp="1583264011342">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -109,9 +128,10 @@
     <state width="336" height="600" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1583229278699" />
     <state width="528" height="912" key="GridCell.Tab.0.right/0.0.2560.1040/-1280.64.1280.1024@0.0.2560.1040" timestamp="1583271264264" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1582887403091">
+>>>>>>> 2301d014da9c32adf736ea1955588a98f34caed8
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582887403091" />
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583229556851" />
     <state x="384" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1582882411886">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
