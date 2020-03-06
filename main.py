@@ -1,3 +1,5 @@
+import tile
+
 
 def menu():
     print("***********************2048**********************")
@@ -33,5 +35,7 @@ def board(size, blocks, mode):
         for k in range(mode):
             print("-", end="")
     print("+")
+
+
 
 menu()
