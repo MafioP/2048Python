@@ -76,11 +76,12 @@ def movement(tiles):
     elif key == "A":
         print("Izquierda")
         for i in range(len(tiles)):
-            for j in range(len(tiles) - 1, 0, -1):
-                for k in range(len(tiles)):
-                    if tiles[j][k - 1].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k][j - 1].setValue(tiles[k][j].getValue())
+            for k in range(len(tiles)-1, 0, 1):
+                for j in range(len(tiles)):
+                    if tiles[k - 1][j].getValue() == 0 and tiles[k][j].getValue() != "*":
+                        tiles[k - 1][j].setValue(tiles[k][j].getValue())
                         tiles[k][j].setValue(0)
+        return tiles
     # elif key == "D":
     #     # Derecha
     # elif key == "S":
