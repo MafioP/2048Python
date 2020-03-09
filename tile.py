@@ -1,7 +1,6 @@
 class Tile:
     def __init__(self):
         self.__value = 0
-        return None
 
     def getValue(self):
         return self.__value
