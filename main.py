@@ -46,7 +46,7 @@ def setGrid(size, blocks):
         while count <= i:
             randX = randInt(size)
             randY = randInt(size)
-            if tiles[randX][randY].getValue() == 0:
+            if tiles[randX][randY].getValue() == " ":
                 tiles[randX][randY].setValue("*")
                 count += 1
                 print(count)
@@ -62,35 +62,49 @@ def newGame():
     return size, mode, tiles
 
 
-def movement(tiles):
-    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
+def movement(key, tiles):
     if key == "W":
         print("Arriba")
         for i in range(len(tiles)):
             for j in range(len(tiles)-1, 0, -1):
                 for k in range(len(tiles)):
-                    if tiles[k][j-1].getValue() == 0 and tiles[k][j].getValue() != "*":
+                    if tiles[k][j-1].getValue() == " "  and tiles[k][j].getValue() != "*":
                         tiles[k][j-1].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
+                        tiles[k][j].setValue(" ")
         return tiles
     elif key == "A":
         print("Izquierda")
         for i in range(len(tiles)):
-            for k in range(len(tiles)-1, 0, 1):
-                for j in range(len(tiles)):
-                    if tiles[k - 1][j].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k - 1][j].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
+            for j in range(len(tiles)):
+                for k in range(len(tiles)-1, 0, -1):
+                    if tiles[k-1][j].getValue() == " " and tiles[k][j].getValue() != "*":
+                        tiles[k-1][j].setValue(tiles[k][j].getValue())
+                        tiles[k][j].setValue(" ")
         return tiles
-    # elif key == "D":
-    #     # Derecha
-    # elif key == "S":
-    #     # Abajo
+    elif key == "D":
+        print("Derecha")
+        for i in range(len(tiles)):
+            for j in range(len(tiles)):
+                for k in range(1, len(tiles), 1):
+                    if tiles[k][j].getValue() == " " and tiles[k-1][j].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k-1][j].getValue())
+                        tiles[k - 1][j].setValue(" ")
+        return tiles
+    elif key == "S":
+        print("Abajo")
+        for i in range(len(tiles)):
+            for j in range(1, len(tiles), 1):
+                for k in range(len(tiles)):
+                    if tiles[k][j].getValue() == " " and tiles[k][j-1].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k][j-1].getValue())
+                        tiles[k][j-1].setValue(" ")
+        return tiles
 
 
 
 while 1 == 1:
     select = menu()
+    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
     if select == 1:
         print("Opcion 1")
         data = newGame()
