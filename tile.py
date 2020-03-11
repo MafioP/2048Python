@@ -7,4 +7,3 @@ class Tile:
 
     def setValue(self, value):
         self.__value = value
-        return None
