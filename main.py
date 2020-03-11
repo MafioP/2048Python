@@ -87,6 +87,7 @@ def movement(key, tiles):
                     elif tiles[k][j-1].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
                         tiles[k][j-1].setValue(tiles[k][j-1].getValue()+tiles[k][j].getValue())
                         tiles[k][j].setValue(" ")
+                        return tiles
         return tiles
     elif key == "A":
         print("Izquierda")
@@ -99,6 +100,7 @@ def movement(key, tiles):
                     elif tiles[k-1][j].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
                         tiles[k-1][j].setValue(tiles[k-1][j].getValue()+tiles[k][j].getValue())
                         tiles[k][j].setValue(" ")
+                        return tiles
         return tiles
     elif key == "D":
         print("Derecha")
@@ -111,6 +113,7 @@ def movement(key, tiles):
                     elif tiles[k][j].getValue() == tiles[k-1][j].getValue() and tiles[k-1][j].getValue() != "*":
                         tiles[k][j].setValue(tiles[k][j].getValue() + tiles[k-1][j].getValue())
                         tiles[k-1][j].setValue(" ")
+                        return tiles
         return tiles
     elif key == "S":
         print("Abajo")
@@ -123,7 +126,7 @@ def movement(key, tiles):
                     elif tiles[k][j].getValue() == tiles[k][j-1].getValue() and tiles[k][j-1].getValue() != "*":
                         tiles[k][j].setValue(tiles[k][j].getValue() + tiles[k][j-1].getValue())
                         tiles[k][j-1].setValue(" ")
-
+                        return tiles
         return tiles
 
 
@@ -139,8 +142,8 @@ while True:
         while True:
             key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
             if key == "W" or key == "A" or key == "D" or key == "S":
-                newtiles = movement(key, tiles)
-                newtiles = addValue(newtiles)
+                tiles = movement(key, tiles)
+                tiles = addValue(tiles)
             elif key == "F":
                 break
-            board(size, mode, newtiles)
+            board(size, mode, tiles)
