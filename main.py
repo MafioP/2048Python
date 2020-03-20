@@ -75,51 +75,58 @@ def newGame():
     return size, mode, tiles
 
 
+def move(x1, y1, x2, y2, newTiles):
+    if newTiles[x1][y1].getValue() == " " and newTiles[x2][y2].getValue() != "*":
+        print("move")
+        newTiles[x1][y1].setValue(newTiles[x2][y2].getValue())
+        newTiles[x2][y2].setValue(" ")
+    return newTiles
+
+
 def movement(key, tiles):
     if key == "W":
+        moveTo = [1, 0]
         print("Arriba")
         for i in range(len(tiles)):
             for j in range(len(tiles)-1, 0, -1):
                 for k in range(len(tiles)):
-                    if tiles[k][j-1].getValue() == " " and tiles[k][j].getValue() != "*":
-                        tiles[k][j-1].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(" ")
-                    elif tiles[k][j-1].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
+                    tiles = move(k, j-1, k, j, tiles)
+                    if tiles[k][j-1].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
                         tiles[k][j-1].setValue(tiles[k][j-1].getValue()+tiles[k][j].getValue())
                         tiles[k][j].setValue(" ")
                         return tiles
         return tiles
     elif key == "A":
+        moveTo = [0, -1]
         print("Izquierda")
         for i in range(len(tiles)):
             for j in range(len(tiles)):
                 for k in range(len(tiles)-1, 0, -1):
-                    if tiles[k-1][j].getValue() == " " and tiles[k][j].getValue() != "*":
-                        tiles[k-1][j].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(" ")
-                    elif tiles[k-1][j].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
+                    tiles = move(k-1, j, k, j, tiles)
+                    if tiles[k-1][j].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
                         tiles[k-1][j].setValue(tiles[k-1][j].getValue()+tiles[k][j].getValue())
                         tiles[k][j].setValue(" ")
                         return tiles
         return tiles
     elif key == "D":
+        moveTo = [0, 1]
         print("Derecha")
         for i in range(len(tiles)):
             for j in range(len(tiles)):
                 for k in range(1, len(tiles), 1):
-                    if tiles[k][j].getValue() == " " and tiles[k-1][j].getValue() != "*":
-                        tiles[k][j].setValue(tiles[k-1][j].getValue())
-                        tiles[k-1][j].setValue(" ")
-                    elif tiles[k][j].getValue() == tiles[k-1][j].getValue() and tiles[k-1][j].getValue() != "*":
+                    tiles = move(k, j, k-1, j, tiles)
+                    if tiles[k][j].getValue() == tiles[k-1][j].getValue() and tiles[k-1][j].getValue() != "*":
                         tiles[k][j].setValue(tiles[k][j].getValue() + tiles[k-1][j].getValue())
                         tiles[k-1][j].setValue(" ")
                         return tiles
         return tiles
     elif key == "S":
+        moveTo = [-1, 0]
         print("Abajo")
         for i in range(len(tiles)):
             for j in range(1, len(tiles), 1):
                 for k in range(len(tiles)):
+                    tiles = move(k, j, k, j-1, tiles)
                     if tiles[k][j].getValue() == " " and tiles[k][j-1].getValue() != "*":
                         tiles[k][j].setValue(tiles[k][j-1].getValue())
                         tiles[k][j-1].setValue(" ")
