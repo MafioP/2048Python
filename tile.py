@@ -1,6 +1,6 @@
 class Tile:
     def __init__(self):
-        self.__value = " "
+        self.__value = 0
 
     def getValue(self):
         return self.__value
