@@ -26,9 +26,9 @@ def board(size, mode, tiles):
         print("")
         for k in range(size):
             print("|", end="")
-            for m in range(mode - len(str(tiles[k][i].getValue()))):
+            for m in range(mode - len(str(tiles[k][i].getDisplayValue()))):
                 print(" ", end="")
-            print(tiles[k][i].getValue(), end="")
+            print(tiles[k][i].getDisplayValue(), end="")
         print("|")
     for j in range(size):
         print("+", end="")
@@ -66,9 +66,6 @@ def setGrid(size, blocks):
             if tiles[randX][randY].getValue() == " ":
                 tiles[randX][randY].setValue("*")
                 count += 1
-    for i in range(len(tiles)):
-        for j in range(len(tiles)):
-            tiles[i][j].setMode(1)
     return tiles
 
 
@@ -90,7 +87,7 @@ def movement(key, movTiles):
                         movTiles[k][j-1].setValue(movTiles[k][j].getValue())
                         movTiles[k][j].setValue(" ")
                     elif movTiles[k][j - 1].getValue() == movTiles[k][j].getValue() and movTiles[k][j].getValue() != "*":
-                        movTiles[k][j - 1].setValue(movTiles[k][j - 1].getValue() + movTiles[k][j].getValue())
+                        movTiles[k][j - 1].setValue(movTiles[k][j - 1].getValue() + 1)
                         movTiles[k][j].setValue(" ")
         return movTiles
     elif key == "A":
@@ -102,7 +99,7 @@ def movement(key, movTiles):
                         movTiles[k - 1][j].setValue(movTiles[k][j].getValue())
                         movTiles[k][j].setValue(" ")
                     elif movTiles[k - 1][j].getValue() == movTiles[k][j].getValue() and movTiles[k][j].getValue() != "*":
-                        movTiles[k - 1][j].setValue(movTiles[k - 1][j].getValue() + movTiles[k][j].getValue())
+                        movTiles[k - 1][j].setValue(movTiles[k - 1][j].getValue() + 1)
                         movTiles[k][j].setValue(" ")
         return movTiles
     elif key == "D":
@@ -114,7 +111,7 @@ def movement(key, movTiles):
                         movTiles[k][j].setValue(movTiles[k - 1][j].getValue())
                         movTiles[k - 1][j].setValue(" ")
                     elif movTiles[k][j].getValue() == movTiles[k - 1][j].getValue() and movTiles[k - 1][j].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k][j].getValue() + movTiles[k - 1][j].getValue())
+                        movTiles[k][j].setValue(movTiles[k][j].getValue() + 1)
                         movTiles[k - 1][j].setValue(" ")
         return movTiles
     elif key == "S":
@@ -126,7 +123,7 @@ def movement(key, movTiles):
                         movTiles[k][j].setValue(movTiles[k][j - 1].getValue())
                         movTiles[k][j - 1].setValue(" ")
                     elif movTiles[k][j].getValue() == movTiles[k][j - 1].getValue() and movTiles[k][j - 1].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k][j].getValue() + movTiles[k][j - 1].getValue())
+                        movTiles[k][j].setValue(movTiles[k][j].getValue() + 1)
                         movTiles[k][j - 1].setValue(" ")
         return movTiles
 
@@ -142,7 +139,7 @@ def changeMode(tiles):
         for j in range(len(tiles)):
             tiles[i][j].setMode(mode)
     board(size, mode, tiles)
-    return tiles
+    return mode
 
 while True:
     select = menu()
@@ -160,7 +157,7 @@ while True:
                 tiles = addValue(tiles)
                 board(size, mode, tiles)
             elif key == "M":
-                tiles = changeMode(tiles)
+                mode = changeMode(tiles)
             elif key == "F":
                 break
 
