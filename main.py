@@ -60,7 +60,7 @@ def setGrid(size, blocks):
         while count <= i:
             randX = randInt(size)
             randY = randInt(size)
-            if tiles[randX][randY].getValue() == 0:
+            if tiles[randX][randY].getValue() == " ":
                 tiles[randX][randY].setValue("*")
                 count += 1
     return tiles
@@ -75,9 +75,6 @@ def newGame():
     return size, mode, tiles
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 def move(x1, y1, x2, y2, newTiles):
     if newTiles[x1][y1].getValue() == " " and newTiles[x2][y2].getValue() != "*":
         print("move")
@@ -87,55 +84,22 @@ def move(x1, y1, x2, y2, newTiles):
 
 
 def movement(key, tiles):
-=======
-def movement(tiles):
-    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
->>>>>>> parent of 19a7e25... movement
-=======
-def movement(tiles):
-    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
->>>>>>> parent of 19a7e25... movement
-=======
-def movement(tiles):
-    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
->>>>>>> parent of 19a7e25... movement
     if key == "W":
         moveTo = [1, 0]
         print("Arriba")
         for i in range(len(tiles)):
             for j in range(len(tiles)-1, 0, -1):
                 for k in range(len(tiles)):
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                     tiles = move(k, j-1, k, j, tiles)
                     if tiles[k][j-1].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
                         tiles[k][j-1].setValue(tiles[k][j-1].getValue()+tiles[k][j].getValue())
                         tiles[k][j].setValue(" ")
                         return tiles
-=======
-                    if tiles[k][j-1].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k][j-1].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
->>>>>>> parent of 19a7e25... movement
-=======
-                    if tiles[k][j-1].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k][j-1].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
->>>>>>> parent of 19a7e25... movement
-=======
-                    if tiles[k][j-1].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k][j-1].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
->>>>>>> parent of 19a7e25... movement
         return tiles
     elif key == "A":
         moveTo = [0, -1]
         print("Izquierda")
         for i in range(len(tiles)):
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             for j in range(len(tiles)):
                 for k in range(len(tiles)-1, 0, -1):
                     tiles = move(k-1, j, k, j, tiles)
@@ -169,42 +133,12 @@ def movement(tiles):
                         tiles[k][j].setValue(tiles[k][j].getValue() + tiles[k][j-1].getValue())
                         tiles[k][j-1].setValue(" ")
                         return tiles
-=======
-=======
->>>>>>> parent of 19a7e25... movement
-=======
->>>>>>> parent of 19a7e25... movement
-            for k in range(len(tiles)-1, 0, 1):
-                for j in range(len(tiles)):
-                    if tiles[k - 1][j].getValue() == 0 and tiles[k][j].getValue() != "*":
-                        tiles[k - 1][j].setValue(tiles[k][j].getValue())
-                        tiles[k][j].setValue(0)
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 19a7e25... movement
-=======
->>>>>>> parent of 19a7e25... movement
-=======
->>>>>>> parent of 19a7e25... movement
         return tiles
-    # elif key == "D":
-    #     # Derecha
-    # elif key == "S":
-    #     # Abajo
 
 
 while True:
     select = menu()
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 19a7e25... movement
-=======
->>>>>>> parent of 19a7e25... movement
-=======
->>>>>>> parent of 19a7e25... movement
     if select == 1:
         print("Opcion 1")
         data = newGame()
