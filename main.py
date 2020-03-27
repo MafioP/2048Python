@@ -77,6 +77,7 @@ def newGame():
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def move(x1, y1, x2, y2, newTiles):
     if newTiles[x1][y1].getValue() == " " and newTiles[x2][y2].getValue() != "*":
         print("move")
@@ -94,12 +95,17 @@ def movement(tiles):
 def movement(tiles):
     key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
 >>>>>>> parent of 19a7e25... movement
+=======
+def movement(tiles):
+    key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
+>>>>>>> parent of 19a7e25... movement
     if key == "W":
         moveTo = [1, 0]
         print("Arriba")
         for i in range(len(tiles)):
             for j in range(len(tiles)-1, 0, -1):
                 for k in range(len(tiles)):
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                     tiles = move(k, j-1, k, j, tiles)
@@ -117,11 +123,17 @@ def movement(tiles):
                         tiles[k][j-1].setValue(tiles[k][j].getValue())
                         tiles[k][j].setValue(0)
 >>>>>>> parent of 19a7e25... movement
+=======
+                    if tiles[k][j-1].getValue() == 0 and tiles[k][j].getValue() != "*":
+                        tiles[k][j-1].setValue(tiles[k][j].getValue())
+                        tiles[k][j].setValue(0)
+>>>>>>> parent of 19a7e25... movement
         return tiles
     elif key == "A":
         moveTo = [0, -1]
         print("Izquierda")
         for i in range(len(tiles)):
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             for j in range(len(tiles)):
@@ -160,12 +172,17 @@ def movement(tiles):
 =======
 =======
 >>>>>>> parent of 19a7e25... movement
+=======
+>>>>>>> parent of 19a7e25... movement
             for k in range(len(tiles)-1, 0, 1):
                 for j in range(len(tiles)):
                     if tiles[k - 1][j].getValue() == 0 and tiles[k][j].getValue() != "*":
                         tiles[k - 1][j].setValue(tiles[k][j].getValue())
                         tiles[k][j].setValue(0)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 19a7e25... movement
+=======
 >>>>>>> parent of 19a7e25... movement
 =======
 >>>>>>> parent of 19a7e25... movement
@@ -180,7 +197,10 @@ while True:
     select = menu()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 19a7e25... movement
 =======
 >>>>>>> parent of 19a7e25... movement
 =======
