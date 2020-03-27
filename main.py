@@ -126,7 +126,6 @@ def movement(key, tiles):
         for i in range(len(tiles)):
             for j in range(1, len(tiles), 1):
                 for k in range(len(tiles)):
-                    tiles = move(k, j, k, j-1, tiles)
                     if tiles[k][j].getValue() == " " and tiles[k][j-1].getValue() != "*":
                         tiles[k][j].setValue(tiles[k][j-1].getValue())
                         tiles[k][j-1].setValue(" ")
