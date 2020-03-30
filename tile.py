@@ -37,7 +37,7 @@ class Tile:
             if self.__value == "*":
                 self.__displayValue = "****"
             else:
-                self.__displayValue =  pow(2, int(self.__value))
+                self.__displayValue = pow(2, int(self.__value))
             return self.__displayValue
         else:
             return " "

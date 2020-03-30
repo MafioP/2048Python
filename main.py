@@ -77,55 +77,59 @@ def newGame():
     return size, 1, tiles
 
 
-def movement(key, movTiles):
+def movement(key, score, tiles):
     if key == "W":
         print("Arriba")
-        for i in range(len(movTiles)):
-            for j in range(len(movTiles) - 1, 0, -1):
-                for k in range(len(movTiles)):
-                    if movTiles[k][j-1].getValue() == " " and movTiles[k][j].getValue() != "*":
-                        movTiles[k][j-1].setValue(movTiles[k][j].getValue())
-                        movTiles[k][j].setValue(" ")
-                    elif movTiles[k][j - 1].getValue() == movTiles[k][j].getValue() and movTiles[k][j].getValue() != "*":
-                        movTiles[k][j - 1].setValue(movTiles[k][j - 1].getValue() + 1)
-                        movTiles[k][j].setValue(" ")
-        return movTiles
+        for i in range(len(tiles)):
+            for j in range(len(tiles) - 1, 0, -1):
+                for k in range(len(tiles)):
+                    if tiles[k][j - 1].getValue() == " " and tiles[k][j].getValue() != "*":
+                        tiles[k][j - 1].setValue(tiles[k][j].getValue())
+                        tiles[k][j].setValue(" ")
+                    elif tiles[k][j - 1].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
+                        tiles[k][j - 1].setValue(tiles[k][j - 1].getValue() + 1)
+                        tiles[k][j].setValue(" ")
+                        score += 1
+        return tiles, score
     elif key == "A":
         print("Izquierda")
-        for i in range(len(movTiles)):
-            for j in range(len(movTiles)):
-                for k in range(len(movTiles) - 1, 0, -1):
-                    if movTiles[k - 1][j].getValue() == " " and movTiles[k][j].getValue() != "*":
-                        movTiles[k - 1][j].setValue(movTiles[k][j].getValue())
-                        movTiles[k][j].setValue(" ")
-                    elif movTiles[k - 1][j].getValue() == movTiles[k][j].getValue() and movTiles[k][j].getValue() != "*":
-                        movTiles[k - 1][j].setValue(movTiles[k - 1][j].getValue() + 1)
-                        movTiles[k][j].setValue(" ")
-        return movTiles
+        for i in range(len(tiles)):
+            for j in range(len(tiles)):
+                for k in range(len(tiles) - 1, 0, -1):
+                    if tiles[k - 1][j].getValue() == " " and tiles[k][j].getValue() != "*":
+                        tiles[k - 1][j].setValue(tiles[k][j].getValue())
+                        tiles[k][j].setValue(" ")
+                    elif tiles[k - 1][j].getValue() == tiles[k][j].getValue() and tiles[k][j].getValue() != "*":
+                        tiles[k - 1][j].setValue(tiles[k - 1][j].getValue() + 1)
+                        tiles[k][j].setValue(" ")
+                        score += 1
+        return tiles, score
     elif key == "D":
         print("Derecha")
-        for i in range(len(movTiles)):
-            for j in range(len(movTiles)):
-                for k in range(1, len(movTiles), 1):
-                    if movTiles[k][j].getValue() == " " and movTiles[k - 1][j].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k - 1][j].getValue())
-                        movTiles[k - 1][j].setValue(" ")
-                    elif movTiles[k][j].getValue() == movTiles[k - 1][j].getValue() and movTiles[k - 1][j].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k][j].getValue() + 1)
-                        movTiles[k - 1][j].setValue(" ")
-        return movTiles
+        for i in range(len(tiles)):
+            for j in range(len(tiles)):
+                for k in range(1, len(tiles), 1):
+                    if tiles[k][j].getValue() == " " and tiles[k - 1][j].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k - 1][j].getValue())
+                        tiles[k - 1][j].setValue(" ")
+                    elif tiles[k][j].getValue() == tiles[k - 1][j].getValue() and tiles[k - 1][j].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k][j].getValue() + 1)
+                        tiles[k - 1][j].setValue(" ")
+                        score += 1
+        return tiles, score
     elif key == "S":
         print("Abajo")
-        for i in range(len(movTiles)):
-            for j in range(1, len(movTiles), 1):
-                for k in range(len(movTiles)):
-                    if movTiles[k][j].getValue() == " " and movTiles[k][j - 1].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k][j - 1].getValue())
-                        movTiles[k][j - 1].setValue(" ")
-                    elif movTiles[k][j].getValue() == movTiles[k][j - 1].getValue() and movTiles[k][j - 1].getValue() != "*":
-                        movTiles[k][j].setValue(movTiles[k][j].getValue() + 1)
-                        movTiles[k][j - 1].setValue(" ")
-        return movTiles
+        for i in range(len(tiles)):
+            for j in range(1, len(tiles), 1):
+                for k in range(len(tiles)):
+                    if tiles[k][j].getValue() == " " and tiles[k][j - 1].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k][j - 1].getValue())
+                        tiles[k][j - 1].setValue(" ")
+                    elif tiles[k][j].getValue() == tiles[k][j - 1].getValue() and tiles[k][j - 1].getValue() != "*":
+                        tiles[k][j].setValue(tiles[k][j].getValue() + 1)
+                        tiles[k][j - 1].setValue(" ")
+                        score += 1
+        return tiles, score
 
 
 def changeMode(tiles):
@@ -141,8 +145,50 @@ def changeMode(tiles):
     board(size, mode, tiles)
     return mode
 
+def readFile():
+    f = open("ej1.tab")
+    f.readline()
+
+def saveFile(mode, tiles):
+    f = open("ej1.tab", "w")
+    f.write(str(score))
+    f.write("\n")
+    f.write(str(mode))
+
+    for i in range(len(tiles)):
+        f.write("\n")
+        for j in range(len(tiles)):
+            tiles[j][i].setMode(1)
+            if tiles[j][i].getDisplayValue() == " ":
+                f.write(".")
+            else:
+                f.write(tiles[j][i].getDisplayValue())
+    f.close()
+
+
+def playGame(mode, score, tiles):
+    moves = 0
+    while True:
+        key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
+        if key == "W" or key == "A" or key == "D" or key == "S":
+            tiles, score = movement(key, score, tiles)
+            moves += 1
+            addValue(tiles)
+            board(size, mode, tiles)
+            print("PUNTUACION:", score, " | ", " MOVIMIENTOS:", moves)
+        elif key == "M":
+            mode = changeMode(tiles)
+        elif key == "G":
+            saveFile(mode, tiles)
+            print("GUARDANDO PARTIDA")
+            board(size, mode, tiles)
+        elif key == "F":
+            break
+
+
 while True:
     select = menu()
+    score = 0
 
     if select == 1:
         print("Opcion 1")
@@ -150,14 +196,8 @@ while True:
         size = data[0]
         mode = data[1]
         tiles = data[2]
-        while True:
-            key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
-            if key == "W" or key == "A" or key == "D" or key == "S":
-                tiles = movement(key, tiles)
-                tiles = addValue(tiles)
-                board(size, mode, tiles)
-            elif key == "M":
-                mode = changeMode(tiles)
-            elif key == "F":
-                break
+        playGame(mode, score, tiles)
+
+    if select == 2:
+        readFile()
 
