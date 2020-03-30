@@ -146,14 +146,31 @@ def changeMode(tiles):
     return mode
 
 def readFile():
-    f = open("ej1.tab")
-    f.readline()
+    f = open("ej1.tab", "r")
+    score = int(f.readline())
+    moves = int(f.readline())
+    strSize = f.readline()
+    tiles = [[tile.Tile() for j in range(len(strSize) - 1)] for i in range(len(strSize) - 1)]
+    mode1Dic = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9, "J": 10, "K" : 11}
+    f.seek(len(str(score)) + len(str(moves)) + 4)           #ir a la posicion 0,0 de la matriz
+    for i in range(len(tiles)):
+        line = f.readline()
+        for j in range(len(tiles)):
+            if line[j] == ".":
+                tiles[j][i].setValue(" ")
+            elif line[j] == "*":
+                tiles[j][i].setValue("*")
+            else:
+                tiles[j][i].setValue(mode1Dic[line[j]])
+    f.close()
 
-def saveFile(mode, tiles):
+    return score, moves, tiles
+
+def saveFile(score, moves, tiles):
     f = open("ej1.tab", "w")
     f.write(str(score))
     f.write("\n")
-    f.write(str(mode))
+    f.write(str(moves))
 
     for i in range(len(tiles)):
         f.write("\n")
@@ -166,22 +183,21 @@ def saveFile(mode, tiles):
     f.close()
 
 
-def playGame(mode, score, tiles):
-    moves = 0
+def playGame(mode, score, moves, tiles):
     while True:
         key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
         if key == "W" or key == "A" or key == "D" or key == "S":
             tiles, score = movement(key, score, tiles)
             moves += 1
             addValue(tiles)
-            board(size, mode, tiles)
+            board(len(tiles), mode, tiles)
             print("PUNTUACION:", score, " | ", " MOVIMIENTOS:", moves)
         elif key == "M":
             mode = changeMode(tiles)
         elif key == "G":
-            saveFile(mode, tiles)
+            saveFile(score, moves, tiles)
             print("GUARDANDO PARTIDA")
-            board(size, mode, tiles)
+            break
         elif key == "F":
             break
 
@@ -189,15 +205,18 @@ def playGame(mode, score, tiles):
 while True:
     select = menu()
     score = 0
-
+    mode = 1
+    moves = 0
     if select == 1:
         print("Opcion 1")
         data = newGame()
         size = data[0]
         mode = data[1]
         tiles = data[2]
-        playGame(mode, score, tiles)
+        playGame(mode, score, moves, tiles)
 
     if select == 2:
-        readFile()
+        score, moves, tiles = readFile()
+        board(len(tiles), mode, tiles)
+        playGame(mode, score, moves, tiles)
 
