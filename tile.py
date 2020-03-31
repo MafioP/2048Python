@@ -3,6 +3,16 @@ class Tile:
         self.__value = " "
         self.__displayValue = " "
         self.__mode = 1
+        self.__locked = False
+
+    def isLocked(self):
+        return self.__locked
+
+    def lock(self):
+        self.__locked = True
+
+    def unlock(self):
+        self.__locked = False
 
     def getValue(self):
         return self.__value
