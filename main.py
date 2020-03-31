@@ -242,16 +242,20 @@ def playGame(mode, score, moves, tiles):
         if key == "W" or key == "A" or key == "D" or key == "S":
             tiles, score = movement(key, score, tiles)
             tiles = unlockAll(tiles)
-            moves += 1
             addValue(tiles)
             board(len(tiles), mode, tiles)
-            print("PUNTUACION:", score, " | ", " MOVIMIENTOS:", moves)
             if check2048(tiles):
                 print("HAS LLEGADO A 2048, ENHORABUENA HAS GANADO")
+                print("PUNTUACION FINAL:", score, "|MOVIMIENTOS TOTALES:", moves)
                 break
             if checkFullGrid(tiles):
                 print("SE HA LLENADO EL TABLERO, HAS PERDIDO")
+                print("PUNTUACION FINAL:", score, "|MOVIMIENTOS TOTALES:", moves)
                 break
+            else:
+                moves +=1
+                print("PUNTUACION:", score, " | ", " MOVIMIENTOS:", moves)
+
         elif key == "M":
             mode = changeMode(tiles)
         elif key == "G":

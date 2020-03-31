@@ -1,28 +1,36 @@
 class Tile:
+    '''Inicializar los campos del objeto Tile'''
     def __init__(self):
         self.__value = " "
         self.__displayValue = " "
         self.__mode = 1
         self.__locked = False
 
+    '''Devuelve si la celda esta bloqueada'''
     def isLocked(self):
         return self.__locked
 
+    '''Bloquea la celda'''
     def lock(self):
         self.__locked = True
 
+    '''Desbloquea la celda'''
     def unlock(self):
         self.__locked = False
 
+    '''Devuelve el valor de la celda'''
     def getValue(self):
         return self.__value
 
+    '''Guarda el valor de la celda'''
     def setValue(self, value):
         self.__value = value
 
+    '''Guarda el modo de juego'''
     def setMode(self, mode):
         self.__mode = mode
 
+    '''Devuelve el valor correspondiente al modo en el que se esta jugando'''
     def getDisplayValue(self):
         mode1Dic = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E", 6: "F", 7: "G", 8: "H", 9: "I", 10: "J", 11: "K"}
         if self.__mode == 1 and self.__value != " ":  # modo letra
