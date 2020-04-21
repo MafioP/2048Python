@@ -181,18 +181,35 @@ def readFile():
     score = int(f.readline())
     moves = int(f.readline())
     strSize = f.readline()
-    tiles = [[tile.Tile() for j in range(len(strSize) - 1)] for i in range(len(strSize) - 1)]
-    mode1Dic = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9, "J": 10, "K" : 11}
+    tileSize = 0
+    for i in range(len(strSize)):
+        if strSize[i] != " ":
+            tileSize += 1
+    tileSize -= 1                #quitar el salto de linea
+    print(tileSize)
+    tiles = [[tile.Tile() for j in range(tileSize)] for i in range(tileSize)]
     f.seek(len(str(score)) + len(str(moves)) + 4)           #ir a la posicion 0,0 de la matriz
     for i in range(len(tiles)):
         line = f.readline()
-        for j in range(len(tiles)):
-            if line[j] == ".":
-                tiles[j][i].setValue(" ")
-            elif line[j] == "*":
-                tiles[j][i].setValue("*")
-            else:
-                tiles[j][i].setValue(mode1Dic[line[j]])
+        for j in range(len(tiles) * 2):
+            while True:
+                if line[j] == " ":
+                    break
+                elif line[j] == ".":
+                    tiles[int(j/2)][i].setValue(" ")
+                    break
+                elif line[j] == "*":
+                    tiles[int(j/2)][i].setValue("*")
+                    break
+                elif line[j] != " " and line[j + 1] != " ":
+                    tiles[int(j/2)][i].setValue(int(line[j])*10 + int(line[j + 1]))
+                    print(tiles[int(j/2)][i].getValue())
+                    j += 1
+                    break
+                elif line[j] != " ":
+                    tiles[int(j/2)][i].setValue(int(line[j]))
+                    break
+
     f.close()
 
     return score, moves, tiles
@@ -209,11 +226,16 @@ def saveFile(score, moves, tiles):
     for i in range(len(tiles)):
         f.write("\n")
         for j in range(len(tiles)):
-            tiles[j][i].setMode(1)
+            tiles[j][i].setMode(2)
             if tiles[j][i].getDisplayValue() == " ":
                 f.write(".")
+                f.write(" ")
+            elif tiles[j][i].getValue() == "*":
+                f.write("*")
+                f.write(" ")
             else:
-                f.write(tiles[j][i].getDisplayValue())
+                f.write(str(tiles[j][i].getDisplayValue()))
+                f.write(" ")
     f.close()
 
 
@@ -235,11 +257,19 @@ def check2048(tiles):
     return False
 
 
+
+def randomKey():
+    keydic = {0:"W", 1:"A", 2:"S", 3:"D"}
+    key = keydic[randInt(len(keydic))]
+    return key
+
+
 '''Metodo que corre el juego, controlando las entradas del jugador y llamando a las funciones correspondientes'''
 def playGame(mode, score, moves, tiles):
     while True:
         key = input("(W)Arriba, (A)Izquierda, (D)Derecha, (S)Abajo, (M)Modo, (G)Guardar, (F)Fin")
-        if key == "W" or key == "A" or key == "D" or key == "S":
+        if key == "":
+            key = randomKey();
             tiles, score = movement(key, score, tiles)
             tiles = unlockAll(tiles)
             addValue(tiles)
@@ -264,6 +294,7 @@ def playGame(mode, score, moves, tiles):
             break
         elif key == "F":
             break
+
 
 '''Bucle principal del juego, que se repite hasta que el jugador sale de este usando la opcion 3 del menu'''
 while True:
