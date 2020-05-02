@@ -201,11 +201,6 @@ def readFile():
                 elif line[j] == "*":
                     tiles[int(j/2)][i].setValue("*")
                     break
-                elif line[j] != " " and line[j + 1] != " ":
-                    tiles[int(j/2)][i].setValue(int(line[j])*10 + int(line[j + 1]))
-                    print(tiles[int(j/2)][i].getValue())
-                    j += 1
-                    break
                 elif line[j] != " ":
                     tiles[int(j/2)][i].setValue(int(line[j]))
                     break
