@@ -1,6 +1,7 @@
 import tile
 import random
 import sys
+import window
 
 
 '''Menu principal del juego, devuelve la seleccion del usuario'''
@@ -266,7 +267,11 @@ def playGame(mode, score, moves, tiles):
             break
 
 '''Bucle principal del juego, que se repite hasta que el jugador sale de este usando la opcion 3 del menu'''
+
+
 while True:
+    app = window.Window(0)
+    app.MainLoop()
     select = menu()
     score = 0
     mode = 1
