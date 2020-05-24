@@ -268,27 +268,30 @@ def playGame(mode, score, moves, tiles):
 
 '''Bucle principal del juego, que se repite hasta que el jugador sale de este usando la opcion 3 del menu'''
 
-
-while True:
-    app = window.Window(0)
-    app.MainLoop()
-    select = menu()
-    score = 0
-    mode = 1
-    moves = 0
-    if select == 1:
-        print("Opcion 1")
-        data = newGame()
-        size = data[0]
-        mode = data[1]
-        tiles = data[2]
-        playGame(mode, score, moves, tiles)
-
-    if select == 2:
-        score, moves, tiles = readFile()
-        board(len(tiles), mode, tiles)
-        playGame(mode, score, moves, tiles)
-
-    if select == 3:
-        print("Opcion 3")
-        sys.exit(0)
+#
+# while True:
+#
+#
+#     select = menu()
+#     score = 0
+#     mode = 1
+#     moves = 0
+#     if select == 1:
+#         print("Opcion 1")
+#         data = newGame()
+#         size = data[0]
+#         mode = data[1]
+#         tiles = data[2]
+#         app = window.Window(0)
+#         app.main_Frame.addData(5, 6)
+#         app.MainLoop()
+#         playGame(mode, score, moves, tiles)
+#
+#     if select == 2:
+#         score, moves, tiles = readFile()
+#         board(len(tiles), mode, tiles)
+#         playGame(mode, score, moves, tiles)
+#
+#     if select == 3:
+#         print("Opcion 3")
+#         sys.exit(0)
