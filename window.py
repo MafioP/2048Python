@@ -33,8 +33,6 @@ class MainFrame(wx.Frame):
 
         self.__set_properties()
         self.__do_layout()
-        self.addGrid()
-        self.SetFocus()
 
         self.Bind(wx.EVT_BUTTON, self.on_change_mode, self.mode_Button)
         self.Bind(wx.EVT_BUTTON, self.on_save_game, self.save_Button)
@@ -43,6 +41,10 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_KEY_UP, self.onKeyRelease)
         self.Bind(wx.EVT_CHAR, self.onKeyPress)
         # end wxGlade
+
+        self.addData(self.score, self.moves)
+        self.addGrid()
+        self.SetFocus()
 
     def addGrid(self):
         grid = wx.GridSizer(len(self.tiles), len(self.tiles), 5, 5)
@@ -104,11 +106,25 @@ class MainFrame(wx.Frame):
     def onKeyPress(self, event):
         keycode = event.GetKeyCode()
         print("KeyPressed: " + str(keycode))
-        self.keyActivated = keycode
+        if keycode == 87:
+            self.tiles, self.score = windowController.movement("W", self.score, self.tiles)
+            windowController.addValue(self.tiles)
+        elif keycode == 65:
+            self.tiles, self.score = windowController.movement("A", self.score, self.tiles)
+            windowController.addValue(self.tiles)
+        elif keycode == 83:
+            self.tiles, self.score = windowController.movement("S", self.score, self.tiles)
+            windowController.addValue(self.tiles)
+        elif keycode == 68:
+            self.tiles, self.score = windowController.movement("D", self.score, self.tiles)
+            windowController.addValue(self.tiles)
+        self.addData(self.score, self.moves)
+        self.addGrid()
+        self.Layout()
 
     def onKeyRelease(self, event):
         keycode = event.GetKeyCode()
-        print("KeyReleased: " + str(keycode))
+        #print("KeyReleased: " + str(keycode))
         self.keyActivated = None
 
     def getKey(self):
