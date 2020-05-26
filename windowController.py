@@ -176,8 +176,7 @@ def changeMode(tiles):
 
 
 '''Lee el archivo donde esta guardada la partida'''
-def readFile():
-    fileName = input("Introduzca el nombre del fichero a leer")
+def readFile(fileName):
     f = open(fileName, "r")
     score = int(f.readline())
     moves = int(f.readline())
