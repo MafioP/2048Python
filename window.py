@@ -7,20 +7,20 @@ import windowController
 import wx
 import os
 
+
 # begin wxGlade: dependencies
 # end wxGlade
 
 # begin wxGlade: extracode
 # end wxGlade
 
-
-
-# end of class newGameFrame
+'''Ventana principal del juego, donde esta el tablero, la puntuacion y distintos controles'''
 class MainFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         self.tiles = ""
         self.score = 0
         self.moves = 0
+        self.mode = 1
         # begin wxGlade: MainFrame.__init__
         kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
@@ -41,20 +41,40 @@ class MainFrame(wx.Frame):
         # end wxGlade
 
         self.Bind(wx.EVT_KEY_DOWN, self.onKeyPress)
-
         self.addData(self.score, self.moves)
         self.SetFocus()
+        self.Center()
+
+    '''Añadir el tablero, a partir de un gridSizer con las imagenes de los valores de la matriz tiles'''
 
     def addGrid(self):
         grid = wx.GridSizer(len(self.tiles), len(self.tiles), 5, 5)
         print("Cols " + str(grid.GetCols()))
+        windowController.changeMode(self.mode, self.tiles)
         for i in range(len(self.tiles)):
             for j in range(len(self.tiles)):
-                label = wx.StaticText(self.grid_Panel)
-                label.SetLabel(self.tiles[j][i].getDisplayValue())
-                grid.Add(label, 1, wx.EXPAND, 5)
+                image = self.setImage(i, j)
+                grid.Add(image, 1, wx.EXPAND, 5)
         self.grid_Panel.SetSizer(grid)
         self.Layout()
+
+    '''A partir del valor y del modo de cada casilla generamos el nombre de la imagen y la convertimos en un bitmap
+    para guardarla en la grid'''
+
+    def setImage(self, i, j):
+        imageName = ""
+        if self.tiles[j][i].getValue() == "*":
+            imageName = "Bloque.png"
+        elif self.tiles[j][i].getValue() == " ":
+            imageName = "Vacio.png"
+        else:
+            imageName = (str(self.mode - 1) + "-" + str(self.tiles[j][i].getValue()) + ".png")
+        print(imageName)
+        image = wx.Image(("images\\" + imageName), wx.BITMAP_TYPE_ANY)
+        imageBitmap = wx.StaticBitmap(self.grid_Panel, wx.ID_ANY, wx.BitmapFromImage(image))
+        return imageBitmap
+
+    '''Controla los labels de datos, actualizandolos en cada movimiento'''
 
     def addData(self, score, moves):
         print("Score:", score)
@@ -62,12 +82,23 @@ class MainFrame(wx.Frame):
         dataSizer = wx.BoxSizer(wx.VERTICAL)
         scoreLbl = wx.StaticText(self.data_Panel)
         scoreLbl.SetLabel("Score: " + str(score))
+        scoreLbl.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         dataSizer.Add(scoreLbl)
         movesLbl = wx.StaticText(self.data_Panel)
         movesLbl.SetLabel("Moves: " + str(moves))
+        movesLbl.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         dataSizer.Add(movesLbl)
+        tutorialLbl = wx.StaticText(self.data_Panel)
+        tutorialLbl.SetLabel("\nControl de movimiento: \n W: Arriba \n S: Abajo \n A: Izquierda \n D: Derecha")
+        tutorialLbl.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        dataSizer.Add(tutorialLbl)
         self.data_Panel.SetSizer(dataSizer)
         self.Layout()
+
+    '''Cambiar la variable modo'''
+
+    def changeMode(self, mode):
+        self.mode = mode
 
     def __set_properties(self):
         # begin wxGlade: MainFrame.__set_properties
@@ -91,50 +122,98 @@ class MainFrame(wx.Frame):
         self.Layout()
         # end wxGlade
 
+    '''Controlador del boton para cambiar el modo, que genera un dialogo con una lista con 4 opciones, y tiene un
+    controlador para detectar cuando se selecciona uno de las opciones'''
+
     def on_change_mode(self, event):  # wxGlade: MainFrame.<event_handler>
-        print("Event handler 'on_change_mode' not implemented!")
-        event.Skip()
+        self.grid_Panel.SetSizer(None, True)
+        self.modeDialog = wx.Dialog(self)
+        self.modeDialog.SetSize(250, 150)
+        modes = ['Alphabetic', 'Level', '1024', '2048']
+        self.modeList = wx.ListBox(self.modeDialog, choices=modes)
+        self.modeList.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(self.modeList, 1, wx.EXPAND, 5)
+        self.modeDialog.SetSizer(sizer)
+        self.modeDialog.Bind(wx.EVT_LISTBOX, self.set_mode, self.modeList)
+        self.modeDialog.ShowModal()
+        self.modeDialog.Layout()
+
+    '''Controlador de la seleccion del dialogo anterior, que cambia el modo en funcion de la opcion seleccionada'''
+
+    def set_mode(self, event):
+        mode = self.modeList.GetSelection()
+        if mode == 0:
+            print("mode 0")
+            self.changeMode(1)
+            self.modeDialog.Destroy()
+        elif mode == 1:
+            self.changeMode(2)
+            self.modeDialog.Destroy()
+        elif mode == 2:
+            self.changeMode(3)
+            self.modeDialog.Destroy()
+        elif mode == 3:
+            self.changeMode(4)
+            self.modeDialog.Destroy()
+        self.SetFocus()
+        self.addGrid()
+
+    '''Abre una ventana del explorador de windows para guardar la partida'''
 
     def on_save_game(self, event):  # wxGlade: MainFrame.<event_handler>
-        print("Event handler 'on_save_game' not implemented!")
-        event.Skip()
+        fileDialog = wx.FileDialog(self, message="Choose a file", defaultDir=os.getcwd(), defaultFile="",
+                                   style=wx.FD_SAVE)
+        if fileDialog.ShowModal() == wx.ID_OK:
+            savePath = fileDialog.GetPath()
+            print("You have chosen this file: ", savePath)
+            fileDialog.Destroy()
+            windowController.saveFile(self.score, self.moves, self.tiles, savePath)
+        else:
+            print("Error in file save path")
+
+    '''Abre la ventana menu y cierra la del juego'''
 
     def on_main_menu(self, event):  # wxGlade: MainFrame.<event_handler>
+        self.Destroy()
         menu = MenuFrame(None, wx.ID_ANY, "")
         menu.ShowModal()
+
+    '''Controlador de las pulsaciones de teclado, que se usan para los distintos movimientos'''
 
     def onKeyPress(self, event):
         keycode = event.GetKeyCode()
         print("KeyPressed: " + str(keycode))
         if keycode == 87:
-            windowController.movement("W", self.score, self.tiles)
+            a, self.score = windowController.movement("W", self.score, self.tiles)
             windowController.addValue(self.tiles)
             self.grid_Panel.SetSizer(None, True)
+            self.moves += 1
         elif keycode == 65:
-            windowController.movement("A", self.score, self.tiles)
+            a, self.score = windowController.movement("A", self.score, self.tiles)
             windowController.addValue(self.tiles)
             self.grid_Panel.SetSizer(None, True)
+            self.moves += 1
         elif keycode == 83:
-            windowController.movement("S", self.score, self.tiles)
+            a, self.score = windowController.movement("S", self.score, self.tiles)
             windowController.addValue(self.tiles)
             self.grid_Panel.SetSizer(None, True)
+            self.moves += 1
         elif keycode == 68:
-            windowController.movement("D", self.score, self.tiles)
+            a, self.score = windowController.movement("D", self.score, self.tiles)
             windowController.addValue(self.tiles)
             self.grid_Panel.SetSizer(None, True)
-        windowController.board(len(self.tiles), 4, self.tiles)
+            self.moves += 1
+        windowController.board(len(self.tiles), self.mode, self.tiles)
         windowController.unlockAll(self.tiles)
         self.addData(self.score, self.moves)
         self.addGrid()
         self.Layout()
 
-
-# end of class MainFrame
+'''Ventana del menu principal'''
 
 class MenuFrame(wx.Dialog):
     def __init__(self, *args, **kwds):
-        self.openPath = ""
-        self.savePath = ""
         # begin wxGlade: MenuFrame.__init__
         kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
@@ -149,6 +228,8 @@ class MenuFrame(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_start_game, self.newGameButton)
         self.Bind(wx.EVT_BUTTON, self.on_load_game, self.loadGameButton)
         self.Bind(wx.EVT_BUTTON, self.on_exit_game, self.exitGameButton)
+
+        self.Center()
         # end wxGlade
 
     def __set_properties(self):
@@ -166,31 +247,38 @@ class MenuFrame(wx.Dialog):
         self.Layout()
         # end wxGlade
 
+    '''Inicia la ventana del juego'''
+
     def on_start_game(self, event):  # wxGlade: MenuFrame.<event_handler>
-        self.Hide()
+        self.Destroy()
         newGame_Frame = newGameFrame(None, wx.ID_ANY, "")
         newGame_Frame.Show()
 
+    '''Abre una ventana del explorador de windows para seleccionar un archivo .tab de una partida guardada
+    anteriormente'''
+
     def on_load_game(self, event):  # wxGlade: MenuFrame.<event_handler>
-        fileDialog = wx.FileDialog(self, message="Choose a file",  defaultDir=os.getcwd(), defaultFile="",
+        fileDialog = wx.FileDialog(self, message="Choose a file", defaultDir=os.getcwd(), defaultFile="",
                                    style=wx.FD_OPEN | wx.FD_CHANGE_DIR)
         if fileDialog.ShowModal() == wx.ID_OK:
-            self.openPath = fileDialog.GetPath()
-            print("You have chosen this file: ", self.openPath)
+            openPath = fileDialog.GetPath()
+            print("You have chosen this file: ", openPath)
             fileDialog.Destroy()
-        self.Hide()
+        self.Destroy()
 
         self.main_Frame = MainFrame(None, wx.ID_ANY, "")
-        self.main_Frame.score, self.main_Frame.moves, self.main_Frame.tiles = windowController.readFile(self.openPath)
+        self.main_Frame.score, self.main_Frame.moves, self.main_Frame.tiles = windowController.readFile(openPath)
         self.main_Frame.addGrid()
         self.main_Frame.Show()
 
+    '''Cerrar la ventana menu'''
 
     def on_exit_game(self, event):  # wxGlade: MenuFrame.<event_handler>
-        event.Skip()
+        wx.CallAfter(self.Close)
+
 
 # end of class MenuFrame
-
+'''Ventana para crear una partida nueva'''
 
 class newGameFrame(wx.Dialog):
     def __init__(self, *args, **kwds):
@@ -199,21 +287,25 @@ class newGameFrame(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
         self.SetSize((400, 300))
         self.size_SpinCtrl = wx.SpinCtrl(self, wx.ID_ANY, "4", min=0, max=10)
-        self.block_SpinCtrl = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0, max=100)
+        self.block_SpinCtrl = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0, max=10)
         self.start_Button = wx.Button(self, wx.ID_ANY, "Start Game")
 
         self.__set_properties()
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.on_start_game, self.start_Button)
+
+        self.Center()
         # end wxGlade
 
     def __set_properties(self):
         # begin wxGlade: newGameFrame.__set_properties
         self.SetTitle("New Game")
         self.SetSize((400, 300))
-        self.size_SpinCtrl.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
-        self.block_SpinCtrl.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        self.size_SpinCtrl.SetFont(
+            wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        self.block_SpinCtrl.SetFont(
+            wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         # end wxGlade
 
     def __do_layout(self):
@@ -226,8 +318,9 @@ class newGameFrame(wx.Dialog):
         sizer_6.Add(size_Label, 1, wx.ALL, 15)
         sizer_6.Add(self.size_SpinCtrl, 1, wx.ALL, 15)
         sizer_5.Add(sizer_6, 1, wx.ALL | wx.EXPAND, 5)
-        blocks_Label = wx.StaticText(self, wx.ID_ANY, "Select number of \n obstacles")
-        blocks_Label.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
+        blocks_Label = wx.StaticText(self, wx.ID_ANY, "Select number of \nobstacles")
+        blocks_Label.SetFont(
+            wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         sizer_7.Add(blocks_Label, 1, wx.ALL, 15)
         sizer_7.Add(self.block_SpinCtrl, 1, wx.ALL, 15)
         sizer_5.Add(sizer_7, 1, wx.ALL | wx.EXPAND, 5)
@@ -235,6 +328,9 @@ class newGameFrame(wx.Dialog):
         self.SetSizer(sizer_5)
         self.Layout()
         # end wxGlade
+
+    '''Controlador del boton para empezar, que usa los valores de los Spin Controls para crear el GridSizer del 
+    tablero y tambien una instancia de la clase mainFrame'''
 
     def on_start_game(self, event):
         size = self.size_SpinCtrl.GetValue()
@@ -245,6 +341,7 @@ class newGameFrame(wx.Dialog):
         self.main_Frame.addGrid()
         self.main_Frame.Show()
 
+'''Clase controladora del programa'''
 
 class Window(wx.App):
     def OnInit(self):
@@ -255,7 +352,7 @@ class Window(wx.App):
 
 
 # end of class Window
-
+'''Bucle principal'''
 if __name__ == "__main__":
     app = Window(0)
     app.MainLoop()

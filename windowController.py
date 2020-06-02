@@ -161,13 +161,7 @@ def unlockAll(tiles):
 
 
 '''Pide el nuevo modo de juego y lo cambia acordemente'''
-def changeMode(tiles):
-    print("*******Seleccion de modo de juego********")
-    print("Modo 1: Alfabeto")
-    print("Modo 2: Nivel")
-    print("Modo 3: 1024")
-    print("Modo 4: 2048")
-    mode = int(input("Escoja opcion:"))
+def changeMode(mode, tiles):
     for i in range(len(tiles)):
         for j in range(len(tiles)):
             tiles[i][j].setMode(mode)
@@ -199,8 +193,7 @@ def readFile(fileName):
 
 
 '''Guarda la partida en un archivo existente o crea uno nuevo'''
-def saveFile(score, moves, tiles):
-    fileName = input("Introduzca el nombre del fichero a guardar")
+def saveFile(score, moves, tiles, fileName):
     f = open(fileName, "w")
     f.write(str(score))
     f.write("\n")
